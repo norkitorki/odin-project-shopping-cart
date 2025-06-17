@@ -1,0 +1,48 @@
+.trigger {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  font-size: 0.9rem;
+  border: none;
+  transition: all 0.8s ease;
+}
+
+.trigger:hover,
+.trigger:focus,
+.trigger:has(> .dropdown *:focus) {
+  transform: scale(1.1);
+}
+
+.dropdown {
+  width: min(500px, 80vw);
+  border: 1px solid #0000001e;
+  background: #e6e6e6;
+  padding: 0.5rem;
+  position: absolute;
+  top: 1rem;
+  right: calc(1rem - 50%);
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+  transition: top 0.8s, opacity 0.8s, visibility 0.8s;
+  transition-timing-function: ease;
+}
+
+.itemLink {
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+.itemLink img {
+  max-height: 0.9rem;
+  padding-right: 0.5rem;
+}
+
+.menuExtended {
+  top: 100%;
+  z-index: 2;
+  visibility: visible;
+  opacity: 1;
+}
