@@ -1,0 +1,80 @@
+.heading {
+  composes: heading from '/src/style/global.module.css';
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.emptyMessage {
+  text-align: center;
+}
+
+.itemTable {
+  width: max-content;
+  margin: 0 auto;
+}
+
+.itemTable th {
+  font-weight: bold;
+  border-bottom: 1px solid #00000041;
+}
+
+.itemTable th,
+.itemTable td {
+  padding: 0.5rem;
+  vertical-align: middle;
+}
+
+.itemLink {
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.itemImage {
+  max-height: 42px;
+}
+
+.quantity {
+  max-width: 40px;
+  padding: 0.3rem;
+}
+
+.removeButton {
+  padding: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease-in;
+}
+
+.removeButton:hover,
+.removeButton:focus {
+  color: #970808;
+}
+
+.clearButton,
+.checkoutButton {
+  composes: button from '/src/style/global.module.css';
+  transition: background 0.2s ease;
+}
+
+.clearButton {
+  background: #8d2606;
+}
+
+.clearButton:hover,
+.clearButton:focus {
+  background: #a33311;
+}
+
+.checkoutButton {
+  margin-left: 0.5rem;
+  background: #07682f;
+}
+
+.checkoutButton:hover,
+.checkoutButton:focus {
+  background: #07813a;
+}
