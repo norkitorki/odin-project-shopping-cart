@@ -5,6 +5,7 @@ import useLocalItems from '../hooks/useLocalItems';
 export default function CartItemsProvider({ children }) {
   const { localItems, setLocalItems, removeLocalItems } = useLocalItems();
   const [cartItems, setCartItems] = useState(localItems);
+  const total = cartItems.reduce((t, c) => (t += c.quantity * c.price), 0);
 
   const addToCart = (item, quantity = 1) => {
     if (!item || !quantity || quantity < 1) return;
@@ -37,9 +38,21 @@ export default function CartItemsProvider({ children }) {
     setCartItems(items);
   };
 
+  const clearItems = () => {
+    setCartItems([]);
+    removeLocalItems();
+  };
+
   return (
     <CartItemsContext
-      value={{ cartItems, addToCart, updateQuantity, removeFromCart }}
+      value={{
+        cartItems,
+        total,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        clearItems,
+      }}
     >
       {children}
     </CartItemsContext>
