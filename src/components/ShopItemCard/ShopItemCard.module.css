@@ -62,13 +62,9 @@
 }
 
 .addButton {
-  padding: 0.5rem;
-  font-size: 1.1rem;
-  font-weight: bold;
+  composes: button from '/src/style/global.module.css';
   background: #05706b;
-  border: none;
-  color: #ffffff;
-  box-shadow: #38383859 3px 2px 3px;
+  transition: background 0.2s ease;
 }
 
 .addButton:hover,
