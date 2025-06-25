@@ -1,7 +1,13 @@
 .items {
-  padding: 0 1rem;
+  padding: 1rem;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1.5rem;
+}
+
+.items > * {
+  flex-basis: 320px;
+  flex-shrink: 0;
 }

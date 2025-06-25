@@ -1,13 +1,18 @@
 .wrapper {
-  max-height: max-content;
   font-family: Calibri, 'Trebuchet MS', sans-serif;
   padding: 1rem;
   border: 1px solid #0000001e;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.wrapper:has(.itemLink:hover, .itemLink:focus) {
+  border-color: #05706b52;
 }
 
 .itemLink {
@@ -29,7 +34,7 @@
 .itemImage {
   display: block;
   margin: 0 auto;
-  max-height: 200px;
+  max-height: 170px;
   transition: transform 0.3s ease;
 }
 
@@ -42,6 +47,8 @@
 }
 
 .itemDescription {
+  max-height: 80px;
+  overflow: hidden;
   line-height: 1.3;
 }
 
