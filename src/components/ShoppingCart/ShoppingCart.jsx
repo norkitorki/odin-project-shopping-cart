@@ -54,7 +54,7 @@ export default function ShoppingCart() {
                 <button
                   onClick={() => removeFromCart(item.id)}
                   className={styles.removeButton}
-                  title="Remove item from cart"
+                  title={`Remove '${item.title}' from cart`}
                 >
                   <XCircle />
                 </button>
