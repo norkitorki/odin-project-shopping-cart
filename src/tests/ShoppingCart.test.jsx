@@ -114,7 +114,7 @@ describe('when shopping cart is populated', () => {
     expect(itemRow).toBeInTheDocument();
     await user.click(
       within(itemRow).getByRole('button', {
-        name: /remove item from cart/i,
+        name: `Remove 'Test Item' from cart`,
       })
     );
     expect(itemRow).not.toBeInTheDocument();

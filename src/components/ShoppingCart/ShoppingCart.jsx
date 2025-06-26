@@ -36,7 +36,7 @@ export default function ShoppingCart() {
             <tr key={item.id}>
               <td>
                 <Link to={`/shop/item/${item.id}`} className={styles.itemLink}>
-                  <img src={item.image} className={styles.itemImage}></img>
+                  <img src={item.image} className={styles.itemImage} />
                   <span>{item.title}</span>
                 </Link>
               </td>
