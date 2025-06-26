@@ -11,7 +11,7 @@ export default function ShopItem() {
 
   return (
     <div className={styles.wrapper}>
-      <ShopItemCard item={item} redirectToCart={true} />
+      <ShopItemCard item={item} linkToItem={false} redirectToCart={true} />
     </div>
   );
 }

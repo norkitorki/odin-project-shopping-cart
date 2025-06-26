@@ -15,10 +15,6 @@ test('renders shop item', () => {
     <ShopItemStub initialEntries={[`/shop/item/${shopItem.id}`]} />
   );
 
-  expect(
-    screen.getByRole('link', {
-      name: shopItem.title,
-    })
-  ).toBeInTheDocument();
+  expect(screen.getByText(shopItem.title)).toBeInTheDocument();
   expect(screen.getByText(shopItem.description)).toBeInTheDocument();
 });

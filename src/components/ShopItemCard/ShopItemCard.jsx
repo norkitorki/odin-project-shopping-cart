@@ -4,7 +4,11 @@ import { Link, useNavigate } from 'react-router';
 import { CartItemsContext } from '../../contexts/CartItemsContext';
 import moveImageToCart from './moveImageToCart.js';
 
-export default function ShopItemCard({ item, redirectToCart = false }) {
+export default function ShopItemCard({
+  item,
+  linkToItem = true,
+  redirectToCart = false,
+}) {
   const itemImage = useRef(null);
   const navigate = useNavigate();
   const { addToCart } = useContext(CartItemsContext);
@@ -19,22 +23,32 @@ export default function ShopItemCard({ item, redirectToCart = false }) {
     moveImageToCart(itemImage.current);
   };
 
+  const TitleContent = (
+    <>
+      <img
+        src={item.image}
+        className={styles.itemImage}
+        alt={item.title}
+        ref={itemImage}
+      />
+      <p className={styles.itemTitle}>{item.title}</p>
+    </>
+  );
+
   return (
     <article key={item.id} className={styles.wrapper}>
-      <Link
-        to={`/shop/item/${item.id}`}
-        title={item.title}
-        className={styles.itemLink}
-        aria-label={item.title}
-      >
-        <img
-          src={item.image}
-          className={styles.itemImage}
-          alt={item.title}
-          ref={itemImage}
-        />
-        <p className={styles.itemTitle}>{item.title}</p>
-      </Link>
+      {linkToItem ? (
+        <Link
+          to={`/shop/item/${item.id}`}
+          title={item.title}
+          className={styles.itemLink}
+          aria-label={item.title}
+        >
+          {TitleContent}
+        </Link>
+      ) : (
+        <div className={styles.itemLink}>{TitleContent}</div>
+      )}
       <p className={styles.itemDescription}>{item.description}</p>
       <span className={styles.itemPrice}>${item.price.toFixed(2)}</span>
       <button className={styles.addButton} onClick={onClick}>
