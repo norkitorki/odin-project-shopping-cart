@@ -28,7 +28,7 @@
 
 .itemLink:hover > .itemTitle,
 .itemLink:focus > .itemTitle {
-  color: #05706b;
+  color: var(--link-accent-color);
 }
 
 .itemImage {
@@ -70,7 +70,7 @@
 
 .addButton {
   composes: button from '/src/style/global.module.css';
-  background: #05706b;
+  background: var(--link-accent-color);
   transition: background 0.2s ease;
 }
 

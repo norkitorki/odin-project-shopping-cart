@@ -35,6 +35,11 @@
   color: black;
 }
 
+.itemLink:hover,
+.itemLink:focus {
+  color: var(--link-accent-color);
+}
+
 .itemLink img {
   max-height: 0.9rem;
   padding-right: 0.5rem;
