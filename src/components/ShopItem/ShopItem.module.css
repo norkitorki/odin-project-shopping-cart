@@ -1,4 +1,9 @@
 .wrapper {
   max-width: max(300px, 50%);
   margin: 0 auto;
+  padding: 2rem;
+}
+
+.wrapper img {
+  max-height: 400px;
 }

@@ -9,5 +9,5 @@
 
 .items > * {
   flex-basis: 320px;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }

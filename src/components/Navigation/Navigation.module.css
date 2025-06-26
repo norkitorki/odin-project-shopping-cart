@@ -1,6 +1,6 @@
 .navigation {
   font-family: Calibri, sans-serif;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
 }
 
 .navigation > a {
@@ -22,4 +22,18 @@
   outline: 1px solid #05706b;
   color: #05706b;
   transform: scale(1.05);
+}
+
+@media screen and (max-width: 720px) {
+  .navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .navigation > a {
+    font-size: 2rem;
+    padding: 0.5rem 3rem;
+  }
 }

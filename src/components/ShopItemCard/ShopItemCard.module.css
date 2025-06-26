@@ -78,3 +78,9 @@
 .addButton:focus {
   background: #077973;
 }
+
+@media screen and (max-width: 400px) {
+  .itemImage {
+    max-width: 95%;
+  }
+}
