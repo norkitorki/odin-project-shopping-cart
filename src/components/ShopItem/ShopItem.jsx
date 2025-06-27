@@ -5,13 +5,13 @@ import { ShopItemsContext } from '../../contexts/ShopItemsContext';
 import ShopItemCard from '../ShopItemCard/ShopItemCard';
 
 export default function ShopItem() {
-  const shopItems = useContext(ShopItemsContext);
+  const { shopItems } = useContext(ShopItemsContext);
   const { id } = useParams();
-  const item = shopItems.find((ite) => ite.id === Number(id));
+  const shopItem = shopItems.find((item) => item.id === Number(id));
 
   return (
     <div className={styles.wrapper}>
-      <ShopItemCard item={item} linkToItem={false} redirectToCart={true} />
+      <ShopItemCard item={shopItem} linkToItem={false} redirectToCart={true} />
     </div>
   );
 }
