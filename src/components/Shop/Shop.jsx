@@ -14,7 +14,7 @@ export default function Shop() {
       <label className={styles.sortLabel}>
         Sort Items By
         <select onChange={sortShopItems}>
-          <option selected />
+          <option defaultChecked />
           <option value="title">Title ASC</option>
           <option value="title-desc">Title DESC</option>
           <option value="price">Price ASC</option>
