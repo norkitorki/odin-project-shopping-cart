@@ -5,5 +5,6 @@
 }
 
 .wrapper img {
+  max-width: 95%;
   max-height: 400px;
 }
