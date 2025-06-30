@@ -1,7 +1,7 @@
 .heading {
   composes: heading from '/src/style/global.module.css';
   text-align: center;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .emptyMessage {
@@ -9,12 +9,12 @@
 }
 
 .itemTable {
-  width: max-content;
+  max-width: max-content;
+  font-weight: bold;
   margin: 0 auto;
 }
 
 .itemTable th {
-  font-weight: bold;
   border-bottom: 1px solid #00000041;
 }
 
@@ -25,12 +25,26 @@
 }
 
 .itemLink {
+  max-width: 400px;
   color: #000000;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 1rem;
   justify-content: space-between;
+}
+
+.itemLink > span {
+  color: #ffffff;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 6px;
+  background-color: var(--link-accent-color);
+}
+
+.itemLink:hover > span,
+.itemLink:focus > span {
+  background-color: #05706be3;
 }
 
 .itemLink:hover,
@@ -42,21 +56,48 @@
   max-height: 42px;
 }
 
-.quantity {
-  max-width: 40px;
-  padding: 0.3rem;
+.quantityWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.quantityDisplay {
+  max-width: 28px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.4rem;
+}
+
+.quantitySelector {
+  position: relative;
+  top: 2px;
+  border: none;
+}
+
+.quantitySelector > svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 3;
+}
+
+.quantitySelector:hover {
+  cursor: pointer;
 }
 
 .removeButton {
+  color: #970808;
   padding: none;
   border: none;
   cursor: pointer;
   transition: color 0.2s ease-in;
 }
 
-.removeButton:hover,
-.removeButton:focus {
-  color: #970808;
+.actionButtons {
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .clearButton,
@@ -75,11 +116,56 @@
 }
 
 .checkoutButton {
-  margin-left: 0.5rem;
   background: #07682f;
 }
 
 .checkoutButton:hover,
 .checkoutButton:focus {
   background: #07813a;
+}
+
+.narrowItemTable {
+  display: none;
+}
+
+.lastRow td {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #00000041;
+}
+
+@media screen and (max-width: 720px) {
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .itemTable {
+    display: none;
+  }
+
+  .narrowItemTable {
+    display: block;
+  }
+
+  .itemTable th {
+    text-align: left;
+    border: none;
+  }
+
+  .quantitySelector > svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .narrowRemoveButton {
+    composes: clearButton;
+  }
+
+  .itemLink {
+    justify-content: start;
+    font-size: 1.1rem;
+  }
+
+  .itemImage {
+    max-height: 62px;
+  }
 }
