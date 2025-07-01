@@ -61,7 +61,6 @@ export default function ShoppingCart() {
     return <h1 className={styles.heading}>Your Shopping Cart is empty</h1>;
   }
 
-  const clearCart = () => clearItems();
   const checkout = () => {
     if (confirm(`Would you like to pay a total of $${total.toFixed(2)}?`)) {
       alert('Thank you for your purchase!');
@@ -147,7 +146,7 @@ export default function ShoppingCart() {
 
       <div className={styles.actionButtons}>
         <button
-          onClick={clearCart}
+          onClick={clearItems}
           className={styles.clearButton}
           title="Clear cart items"
         >
