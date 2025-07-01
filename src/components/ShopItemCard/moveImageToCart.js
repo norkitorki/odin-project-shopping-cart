@@ -9,10 +9,13 @@ export default function moveImageToCart(itemImage) {
   clone.style.left = `${rect.left}px`;
   clone.style.top = `${rect.top}px`;
   clone.classList.value = clonedImage;
-  document.body.appendChild(clone);
+  itemImage.parentElement.appendChild(clone);
 
   clone.style.transform = `translate(${outerWidth - rect.x + rect.width}px, ${-(
-    scrollY + rect.y
+    rect.y +
+    rect.height / 2 +
+    scrollY -
+    scrollY
   )}px)`;
   clone.style.opacity = '0';
 
