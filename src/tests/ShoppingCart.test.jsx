@@ -57,7 +57,7 @@ describe('when shopping cart is populated', () => {
       </MemoryRouter>
     );
 
-    const firstItem = screen.getByRole('row', { name: /test item 2 \$5\.98/i });
+    const firstItem = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
     const secondItem = screen.getByRole('row', {
       name: /another item 1 \$4\.95/i,
     });
@@ -66,13 +66,33 @@ describe('when shopping cart is populated', () => {
     expect(
       within(firstItem).getByRole('link', { name: /test item/i })
     ).toBeInTheDocument();
-    expect(within(firstItem).getByRole('spinbutton')).toHaveValue(2);
+
+    expect(
+      within(firstItem).getByRole('button', {
+        name: /decrease quantity/i,
+      })
+    ).toBeInTheDocument();
+    expect(
+      within(firstItem).getByRole('button', {
+        name: /increase quantity/i,
+      })
+    ).toBeInTheDocument();
 
     expect(secondItem).toBeInTheDocument();
     expect(
       within(secondItem).getByRole('link', { name: /another item/i })
     ).toBeInTheDocument();
-    expect(within(secondItem).getByRole('spinbutton')).toHaveValue(1);
+
+    expect(
+      within(secondItem).getByRole('button', {
+        name: /decrease quantity/i,
+      })
+    ).toBeInTheDocument();
+    expect(
+      within(secondItem).getByRole('button', {
+        name: /increase quantity/i,
+      })
+    ).toBeInTheDocument();
   });
 
   test('updates cart item quantity', async () => {
@@ -86,16 +106,16 @@ describe('when shopping cart is populated', () => {
       </MemoryRouter>
     );
 
-    const itemRow = screen.getByRole('row', { name: /test item 2 \$5\.98/i });
-    const quantityInput = within(itemRow).getByRole('spinbutton');
+    const itemRow = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
+    const quantityDisplay = within(itemRow).getByRole('textbox');
 
-    expect(quantityInput).toHaveValue(2);
-    await user.type(quantityInput, '0');
-    expect(quantityInput).toHaveValue(20);
-
-    expect(
-      within(itemRow).getByRole('cell', { name: /\$59\.80/i })
-    ).toBeInTheDocument();
+    expect(quantityDisplay).toHaveValue('2');
+    await user.click(
+      within(itemRow).getByRole('button', {
+        name: /increase quantity/i,
+      })
+    );
+    expect(quantityDisplay).toHaveValue('3');
   });
 
   test('removes item from cart', async () => {
@@ -109,7 +129,7 @@ describe('when shopping cart is populated', () => {
       </MemoryRouter>
     );
 
-    const itemRow = screen.getByRole('row', { name: /test item 2 \$5\.98/i });
+    const itemRow = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
 
     expect(itemRow).toBeInTheDocument();
     await user.click(
@@ -131,10 +151,14 @@ describe('when shopping cart is populated', () => {
       </MemoryRouter>
     );
 
-    const itemRow = screen.getByRole('row', { name: /test item 2 \$5\.98/i });
-    const quantityInput = within(itemRow).getByRole('spinbutton');
+    const itemRow = screen.getByRole('row', {
+      name: /another item 1 \$4\.95/i,
+    });
+    const decreaseButton = within(itemRow).getByRole('button', {
+      name: /decrease quantity/i,
+    });
 
-    await user.clear(quantityInput);
+    await user.click(decreaseButton);
 
     expect(itemRow).not.toBeInTheDocument();
   });
@@ -150,7 +174,7 @@ describe('when shopping cart is populated', () => {
       </MemoryRouter>
     );
 
-    const firstItem = screen.getByRole('row', { name: /test item 2 \$5\.98/i });
+    const firstItem = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
     const secondItem = screen.getByRole('row', {
       name: /another item 1 \$4\.95/i,
     });

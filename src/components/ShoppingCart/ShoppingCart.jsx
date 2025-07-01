@@ -19,6 +19,7 @@ const ItemQuantity = ({ item, updateQuantity }) => {
       <button
         className={styles.quantitySelector}
         onClick={changeQuantity(item.id, item.quantity - 1)}
+        title="Decrease quantity"
       >
         <Minus />
       </button>
@@ -32,6 +33,7 @@ const ItemQuantity = ({ item, updateQuantity }) => {
       <button
         className={styles.quantitySelector}
         onClick={changeQuantity(item.id, item.quantity + 1)}
+        title="Increase quantity"
       >
         <Plus />
       </button>
