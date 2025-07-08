@@ -14,6 +14,12 @@ export default function ShopItemsProvider({ children }) {
     );
   };
 
+  const filterItems = (category) => {
+    if (category === 'default') return setFilteredItems(null);
+
+    setFilteredItems(shopItems.filter((item) => item.category === category));
+  };
+
   return (
     <ShopItemsContext
       value={{ shopItems, filteredItems, sortItems, filterItems }}
