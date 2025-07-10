@@ -43,7 +43,7 @@ describe('when shopping cart is populated', () => {
 
     expect(
       screen.getByRole('heading', {
-        name: /^your shopping cart$/i,
+        name: /your shopping cart \(2\)/i,
       })
     ).toBeInTheDocument();
   });

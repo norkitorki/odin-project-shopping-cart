@@ -1,5 +1,6 @@
 .heading {
   composes: heading from '/src/style/global.module.css';
+  font-size: 2rem;
   text-align: center;
   padding-bottom: 1.5rem;
 }
@@ -25,7 +26,7 @@
 }
 
 .itemLink {
-  max-width: 400px;
+  max-width: 450px;
   color: #000000;
   text-decoration: none;
   display: flex;
@@ -35,16 +36,8 @@
 }
 
 .itemLink > span {
-  color: #ffffff;
   text-align: center;
   padding: 0.8rem;
-  border-radius: 6px;
-  background-color: var(--link-accent-color);
-}
-
-.itemLink:hover > span,
-.itemLink:focus > span {
-  background-color: #05706be3;
 }
 
 .itemLink:hover,
@@ -90,6 +83,12 @@
   border: none;
   cursor: pointer;
   transition: color 0.2s ease-in;
+}
+
+.removeButton:hover,
+.removeButton:focus {
+  color: #df0e0e;
+  background: transparent;
 }
 
 .actionButtons {

@@ -59,12 +59,16 @@ export default function ShoppingCart() {
   const { cartItems, total, updateQuantity, removeFromCart, clearItems } =
     useContext(CartItemsContext);
 
-  if (cartItems.length <= 0) {
+  const itemCount = cartItems.length;
+
+  if (itemCount <= 0) {
     return <h1 className={styles.heading}>Your Shopping Cart is empty</h1>;
   }
 
+  const toPay = total();
+
   const checkout = () => {
-    if (confirm(`Would you like to pay a total of $${total.toFixed(2)}?`)) {
+    if (confirm(`Would you like to pay a total of $${toPay.toFixed(2)}?`)) {
       alert('Thank you for your purchase!');
       clearItems();
     }
@@ -72,7 +76,7 @@ export default function ShoppingCart() {
 
   return (
     <>
-      <h1 className={styles.heading}>Your Shopping Cart</h1>
+      <h1 className={styles.heading}>Your Shopping Cart ({itemCount})</h1>
       <table className={styles.itemTable}>
         <thead>
           <tr>
@@ -102,7 +106,7 @@ export default function ShoppingCart() {
           </tr>
           <tr>
             <td colSpan={2} />
-            <td>${total.toFixed(2)}</td>
+            <td>${toPay.toFixed(2)}</td>
           </tr>
         </tbody>
       </table>
@@ -141,7 +145,7 @@ export default function ShoppingCart() {
         <tfoot>
           <tr>
             <th>Total</th>
-            <td>${total.toFixed(2)}</td>
+            <td>${toPay.toFixed(2)}</td>
           </tr>
         </tfoot>
       </table>
