@@ -1,27 +1,22 @@
 .navigation {
   font-family: Calibri, sans-serif;
+  background: var(--link-accent-color);
   padding: 1.5rem 1rem;
+  margin-bottom: 1rem;
 }
 
 .navigation > a {
-  color: #000000;
+  color: #ffffff;
   font-weight: bold;
-  font-size: 1.3rem;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
   border-radius: 4px;
   text-decoration: none;
-  transition: all 1s ease;
-}
-
-.navigation > a:hover,
-.navigation > a:focus {
-  color: #089c95;
+  transition: all 0.5s ease;
 }
 
 .navigation > .activeLink {
-  outline: 1px solid #05706b;
-  color: #05706b;
-  transform: scale(1.05);
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 720px) {
@@ -33,6 +28,7 @@
   }
 
   .navigation > a {
+    font-size: 1.4rem;
     padding: 0.5rem 3rem;
   }
 }
