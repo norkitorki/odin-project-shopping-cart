@@ -1,13 +1,14 @@
 import styles from './CartDropdown.module.css';
 import { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { CartItemsContext } from '../../contexts/CartItemsContext';
 import { ShoppingCart as ShoppingCartIcon } from 'feather-icons-react';
 
+const BLACKLISTED_PATHS = ['/', '/cart'];
+
 export default function CartDropdown() {
-  const { cartItems, total } = useContext(CartItemsContext);
-  const [expanded, setExpanded] = useState(false);
-  const navigate = useNavigate();
+
+  if (BLACKLISTED_PATHS.includes(location.pathname)) return;
 
   const itemCount = cartItems.length;
   const expand = () => itemCount > 0 && setExpanded(true);
