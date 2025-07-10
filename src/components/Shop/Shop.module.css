@@ -1,3 +1,17 @@
+.selectWrapper {
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.selectInput {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  border: 1px solid #47474721;
+}
+
 .items {
   padding: 1rem;
   list-style: none;
@@ -12,17 +26,12 @@
   flex-shrink: 1;
 }
 
-.sortLabel {
-  display: block;
-  width: max-content;
-  font-weight: bold;
-  margin: 0 auto;
-}
+@media screen and (max-width: 720px) {
+  .selectWrapper {
+    justify-content: center;
+  }
 
-.sortLabel > select {
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-left: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #47474721;
+  .selectInput {
+    font-size: 1.2rem;
+  }
 }
