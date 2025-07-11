@@ -1,6 +1,5 @@
 import styles from './Navigation.module.css';
 import { NavLink } from 'react-router';
-import CartDropdown from '../CartDropdown/CartDropdown';
 
 export default function Navigation() {
   const activeLink = ({ isActive }) => (isActive ? styles.activeLink : '');
@@ -13,7 +12,6 @@ export default function Navigation() {
       <NavLink to="shop" className={activeLink}>
         Shop
       </NavLink>
-      <CartDropdown />
     </nav>
   );
 }
