@@ -1,38 +1,65 @@
-.trigger {
+.cartTrigger {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 1;
-  font-size: 0.9rem;
+  background: transparent;
   border: none;
-  transition: all 0.8s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.trigger:hover,
-.trigger:focus,
-.trigger:has(> .dropdown *:focus) {
+.cartTrigger:hover,
+.cartTrigger:focus {
   transform: scale(1.1);
 }
 
+.cartIcon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.5;
+}
+
+.cartFilled > .cartIcon {
+  fill: #000000;
+}
+
 .dropdown {
-  width: min(500px, 80vw);
+  width: min(600px, 85vw);
+  font-size: 0.95rem;
   border: 1px solid #0000001e;
   background: #e6e6e6;
-  padding: 0.5rem;
-  position: absolute;
-  top: 1rem;
-  right: calc(1rem - 50%);
+  padding: 1rem;
+  text-align: center;
+  border-radius: 6px 0 0 6px;
+  position: fixed;
+  top: 3rem;
+  right: -50%;
   z-index: -1;
   visibility: hidden;
   opacity: 0;
-  transition: top 0.8s, opacity 0.8s, visibility 0.8s;
-  transition-timing-function: ease;
+  transition: all 0.5s ease;
+}
+
+.cartLink {
+  composes: checkoutButton from '/src/components/ShoppingCart/ShoppingCart.module.css';
+  display: block;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.menuExtended {
+  top: 3.5rem;
+  right: 0;
+  z-index: 2;
+  visibility: visible;
+  opacity: 1;
 }
 
 .itemLink {
+  color: #000000;
   font-weight: bold;
   text-decoration: none;
-  color: black;
 }
 
 .itemLink:hover,
@@ -41,13 +68,11 @@
 }
 
 .itemLink img {
-  max-height: 0.9rem;
+  max-height: 0.95rem;
   padding-right: 0.5rem;
 }
 
-.menuExtended {
-  top: 100%;
-  z-index: 2;
-  visibility: visible;
-  opacity: 1;
+.total {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
