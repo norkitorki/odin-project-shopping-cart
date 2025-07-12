@@ -1,4 +1,19 @@
+.wrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .heading {
   composes: heading from '/src/style/global.module.css';
-  text-align: center;
+}
+
+.shopLink {
+  composes: button from '/src/style/global.module.css';
+  font-size: 1.4rem !important;
+  text-decoration: none;
+  background: var(--link-accent-color);
+  padding: 1rem 2rem !important;
 }
