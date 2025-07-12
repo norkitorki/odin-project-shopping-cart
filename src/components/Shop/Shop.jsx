@@ -1,5 +1,5 @@
 import styles from './Shop.module.css';
-import { useContext, useRef } from 'react';
+import { useCallback, useContext, useMemo, useRef } from 'react';
 import { ShopItemsContext } from '../../contexts/ShopItemsContext';
 import ShopItemCard from '../ShopItemCard/ShopItemCard';
 
@@ -9,20 +9,35 @@ export default function Shop() {
   const sortSelect = useRef(null);
   const items = filteredItems || shopItems;
 
-  const sortShopItems = (event) => {
-    const [property, direction] = event.target.value.split('-');
-    if (property === 'default') return;
+  const sortShopItems = useCallback(
+    (event) => {
+      const [property, direction] = event.target.value.split('-');
+      if (property === 'default') return;
 
-    sortItems(property, direction);
-  };
+      sortItems(property, direction);
+    },
+    [sortItems]
+  );
 
-  const filterShopItems = (event) => {
-    sortSelect.current.value = 'default';
-    filterItems(event.target.value);
-  };
+  const filterShopItems = useCallback(
+    (event) => {
+      sortSelect.current.value = 'default';
+      filterItems(event.target.value);
+    },
+    [filterItems]
+  );
 
-  const categories = Object.keys(
-    shopItems.reduce((obj, item) => ({ ...obj, [item.category]: null }), {})
+  const categories = useMemo(
+    () =>
+      Object.keys(
+        shopItems.reduce((obj, item) => ({ ...obj, [item.category]: null }), {})
+      ),
+    [shopItems]
+  );
+
+  const shopItemCards = useMemo(
+    () => items.map((item) => <ShopItemCard key={item.id} item={item} />),
+    [items]
   );
 
   return (
@@ -52,11 +67,7 @@ export default function Shop() {
           <option value="price-desc">Price DESC</option>
         </select>
       </div>
-      <ul className={styles.items}>
-        {items.map((item) => (
-          <ShopItemCard key={item.id} item={item} />
-        ))}
-      </ul>
+      <div className={styles.items}>{shopItemCards}</div>
     </>
   );
 }
