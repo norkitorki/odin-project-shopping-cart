@@ -67,7 +67,9 @@ export default function Shop() {
           <option value="price-desc">Price DESC</option>
         </select>
       </div>
-      <div className={styles.items}>{shopItemCards}</div>
+      <div className={styles.items} data-testid="itemList">
+        {shopItemCards}
+      </div>
     </>
   );
 }
