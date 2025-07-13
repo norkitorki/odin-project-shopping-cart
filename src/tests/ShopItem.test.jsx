@@ -1,18 +1,22 @@
 import ShopItem from '../components/ShopItem/ShopItem';
-import contextRender from './helpers/contextRender';
-import fakeShopItems from '../assets/fakeShopItems';
-import { screen } from '@testing-library/react';
+import shopItems from '../assets/fakeShopItems';
+import ShopItemsProvider from '../providers/ShopItemsProvider';
+import { render, screen } from '@testing-library/react';
 import { test, expect } from 'vitest';
-import { createRoutesStub, MemoryRouter } from 'react-router';
+import { createRoutesStub } from 'react-router';
 
 test('renders shop item', () => {
   const ShopItemStub = createRoutesStub([
     { path: '/shop/item/:id', Component: ShopItem },
   ]);
-  const shopItem = fakeShopItems[0];
+  const shopItem = shopItems[0];
 
-  contextRender(
-    <ShopItemStub initialEntries={[`/shop/item/${shopItem.id}`]} />
+  <ShopItemsProvider></ShopItemsProvider>;
+
+  render(
+    <ShopItemsProvider>
+      <ShopItemStub initialEntries={[`/shop/item/${shopItem.id}`]} />
+    </ShopItemsProvider>
   );
 
   expect(screen.getByText(shopItem.title)).toBeInTheDocument();

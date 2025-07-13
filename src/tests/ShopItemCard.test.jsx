@@ -1,7 +1,7 @@
 import ShopItemCard from '../components/ShopItemCard/ShopItemCard';
 import fakeShopItems from '../assets/fakeShopItems';
-import contextRender from './helpers/contextRender';
 import userEvent from '@testing-library/user-event';
+import CartItemsProvider from '../providers/CartItemsProvider';
 import { render, screen } from '@testing-library/react';
 import { test, expect, describe } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
@@ -43,12 +43,16 @@ describe('when add to cart button is clicked', () => {
     const user = userEvent.setup();
     const shopItem = fakeShopItems[0];
 
-    contextRender(
+    render(
       <MemoryRouter initialIndex={0} initialEntries={['/shop/item/1']}>
         <Routes>
           <Route
             path="/shop/item/1"
-            element={<ShopItemCard item={shopItem} redirectToCart={true} />}
+            element={
+              <CartItemsProvider>
+                <ShopItemCard item={shopItem} redirectToCart={true} />
+              </CartItemsProvider>
+            }
           />
           <Route path="/cart" element={<h1>Your Shopping Cart</h1>} />
         </Routes>
@@ -83,14 +87,25 @@ describe('when add to cart button is clicked', () => {
       });
     };
 
-    contextRender(
+    render(
       <MemoryRouter initialIndex={0} initialEntries={['/shop/item/1']}>
         <Routes>
           <Route
             path="/shop/item/1"
-            element={<ShopItemCard item={shopItem} redirectToCart={true} />}
+            element={
+              <CartItemsProvider>
+                <ShopItemCard item={shopItem} redirectToCart={true} />
+              </CartItemsProvider>
+            }
           />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/cart"
+            element={
+              <CartItemsProvider>
+                <Cart />
+              </CartItemsProvider>
+            }
+          />
         </Routes>
       </MemoryRouter>
     );
