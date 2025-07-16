@@ -1,9 +1,7 @@
-const KEY = 'cart_items';
+export default function useLocalItems(key) {
+  const localItems = () => JSON.parse(localStorage.getItem(key)) || [];
+  const setLocalItems = (val) => localStorage.setItem(key, JSON.stringify(val));
+  const removeLocalItems = () => localStorage.removeItem(key);
 
-const localItems = () => JSON.parse(localStorage.getItem(KEY)) || [];
-const setLocalItems = (val) => localStorage.setItem(KEY, JSON.stringify(val));
-const removeLocalItems = () => localStorage.removeItem(KEY);
-
-export default function useLocalItems() {
   return { localItems, setLocalItems, removeLocalItems };
 }

@@ -3,7 +3,8 @@ import { useCallback, useState } from 'react';
 import { CartItemsContext } from '../contexts/CartItemsContext';
 
 export default function CartItemsProvider({ children }) {
-  const { localItems, setLocalItems, removeLocalItems } = useLocalItems();
+  const { localItems, setLocalItems, removeLocalItems } =
+    useLocalItems('cart_items');
   const [cartItems, setCartItems] = useState(localItems);
   const [callbacks, setCallbacks] = useState([]);
 
