@@ -102,6 +102,7 @@
 .clearButton,
 .checkoutButton {
   composes: button from '/src/style/global.module.css';
+  cursor: pointer;
   transition: background 0.2s ease;
 }
 
