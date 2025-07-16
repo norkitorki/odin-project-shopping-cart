@@ -71,6 +71,7 @@
 .addButton {
   composes: button from '/src/style/global.module.css';
   background: var(--link-accent-color);
+  cursor: pointer;
   transition: background 0.2s ease;
 }
 
