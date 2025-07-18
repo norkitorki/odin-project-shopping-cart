@@ -30,6 +30,7 @@ export default function CartDropdown({ excludedPaths = [] }) {
   }, [extend, retract]);
 
   const toggleVisibleItems = useCallback(() => {
+    clearTimeout(timeout.current);
     setToggleAllItems(!toggleAllItems);
   }, [toggleAllItems]);
 
