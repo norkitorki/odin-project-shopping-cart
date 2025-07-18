@@ -66,6 +66,9 @@
   color: #000000;
   font-weight: bold;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  max-width: 70%;
 }
 
 .itemLink:hover,
@@ -87,8 +90,13 @@
   background-color: var(--link-accent-color);
 }
 
+.toggleVisible {
+  composes: cartLink;
+  font-size: 0.7rem !important;
+  margin-bottom: 0;
+}
+
 .total {
   font-size: 1.5rem;
   font-weight: bold;
-  padding-top: 0.5rem;
 }

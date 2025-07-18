@@ -1,11 +1,12 @@
 import styles from './CartDropdown.module.css';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { CartItemsContext } from '../../contexts/CartItemsContext';
 import { ShoppingCart as ShoppingCartIcon } from 'feather-icons-react';
 
 export default function CartDropdown({ excludedPaths = [] }) {
   const { cartItems, addCallback, total } = useContext(CartItemsContext);
+  const [toggleAllItems, setToggleAllItems] = useState(false);
   const location = useLocation();
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -28,6 +29,10 @@ export default function CartDropdown({ excludedPaths = [] }) {
       : extend();
   }, [extend, retract]);
 
+  const toggleVisibleItems = useCallback(() => {
+    setToggleAllItems(!toggleAllItems);
+  }, [toggleAllItems]);
+
   useEffect(() => {
     addCallback('openDropdown', (type) => {
       if (type !== 'add') return;
@@ -41,6 +46,7 @@ export default function CartDropdown({ excludedPaths = [] }) {
 
   if (excludedPaths.includes(location.pathname)) return;
 
+  const items = toggleAllItems ? cartItems : cartItems.slice(0, 5);
   const itemCount = cartItems.length;
 
   return (
@@ -63,7 +69,7 @@ export default function CartDropdown({ excludedPaths = [] }) {
           Go To Cart
         </Link>
         <ul>
-          {cartItems.slice(0, 5).map((item) => (
+          {items.map((item) => (
             <li key={item.id}>
               <Link
                 to={`/shop/item/${item.id}`}
@@ -78,7 +84,11 @@ export default function CartDropdown({ excludedPaths = [] }) {
             </li>
           ))}
         </ul>
-        <p>{itemCount > 5 && `+${itemCount - 5} more items`}</p>
+        {itemCount > 5 && (
+          <button onClick={toggleVisibleItems} className={styles.toggleVisible}>
+            {toggleAllItems ? 'Hide' : 'Show'} {itemCount - 5} more items
+          </button>
+        )}
         <p className={styles.total}>${total().toFixed(2)}</p>
       </div>
     </>
