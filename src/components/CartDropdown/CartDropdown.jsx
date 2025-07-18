@@ -73,7 +73,7 @@ export default function CartDropdown({ excludedPaths = [] }) {
                 <img src={item.image} />
                 {item.title}
               </Link>{' '}
-              x {item.quantity}
+              <span className={styles.quantity}>{item.quantity}</span>
               <hr width="90%" />
             </li>
           ))}

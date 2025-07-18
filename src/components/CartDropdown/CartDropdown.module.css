@@ -42,10 +42,16 @@
 }
 
 .cartLink {
-  composes: checkoutButton from '/src/components/ShoppingCart/ShoppingCart.module.css';
-  display: block;
+  composes: button from '/src/style/global.module.css';
+  background: var(--link-accent-color);
   text-decoration: none;
+  display: block;
   margin-bottom: 1rem;
+}
+
+.cartLink:hover,
+.cartLink:focus {
+  background: #057c76;
 }
 
 .menuExtended {
@@ -72,7 +78,17 @@
   padding-right: 0.5rem;
 }
 
+.quantity {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  background-color: var(--link-accent-color);
+}
+
 .total {
   font-size: 1.5rem;
   font-weight: bold;
+  padding-top: 0.5rem;
 }
