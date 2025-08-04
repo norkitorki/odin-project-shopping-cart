@@ -1,7 +1,7 @@
 import styles from './ShopItemCard.module.css';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { CartItemsContext } from '../../contexts/CartItemsContext';
+import { useCartItems } from '../../hooks/useCartItems.js';
 import moveImageToCart from './moveImageToCart.js';
 
 export default function ShopItemCard({
@@ -11,7 +11,7 @@ export default function ShopItemCard({
 }) {
   const itemImage = useRef(null);
   const navigate = useNavigate();
-  const { addToCart } = useContext(CartItemsContext);
+  const { addToCart } = useCartItems();
 
   const onClick = () => {
     addToCart(

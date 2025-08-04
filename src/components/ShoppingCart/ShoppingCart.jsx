@@ -1,7 +1,6 @@
 import styles from './ShoppingCart.module.css';
-import { useContext } from 'react';
-import { CartItemsContext } from '../../contexts/CartItemsContext';
 import { Link } from 'react-router';
+import { useCartItems } from '../../hooks/useCartItems';
 import { XCircle, Minus, Plus } from 'feather-icons-react';
 
 const ItemLink = ({ item }) => (
@@ -57,7 +56,7 @@ const RemoveItemButton = ({ item, removeFromCart }) => {
 
 export default function ShoppingCart() {
   const { cartItems, total, updateQuantity, removeFromCart, clearItems } =
-    useContext(CartItemsContext);
+    useCartItems();
 
   const itemCount = cartItems.length;
 

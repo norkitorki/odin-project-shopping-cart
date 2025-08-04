@@ -1,11 +1,11 @@
 import styles from './CartDropdown.module.css';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
-import { CartItemsContext } from '../../contexts/CartItemsContext';
+import { useCartItems } from '../../hooks/useCartItems';
 import { ShoppingCart as ShoppingCartIcon } from 'feather-icons-react';
 
 export default function CartDropdown({ excludedPaths = [] }) {
-  const { cartItems, addCallback, total } = useContext(CartItemsContext);
+  const { cartItems, addCallback, total } = useCartItems();
   const [toggleAllItems, setToggleAllItems] = useState(false);
   const location = useLocation();
   const trigger = useRef(null);
