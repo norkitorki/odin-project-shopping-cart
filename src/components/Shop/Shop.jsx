@@ -1,11 +1,10 @@
 import styles from './Shop.module.css';
-import { useCallback, useContext, useMemo, useRef } from 'react';
-import { ShopItemsContext } from '../../contexts/ShopItemsContext';
+import { useCallback, useMemo, useRef } from 'react';
+import { useShopItems } from '../../hooks/useShopItems';
 import ShopItemCard from '../ShopItemCard/ShopItemCard';
 
 export default function Shop() {
-  const { shopItems, filteredItems, sortItems, filterItems } =
-    useContext(ShopItemsContext);
+  const { shopItems, filteredItems, sortItems, filterItems } = useShopItems();
   const sortSelect = useRef(null);
   const items = filteredItems || shopItems;
 
