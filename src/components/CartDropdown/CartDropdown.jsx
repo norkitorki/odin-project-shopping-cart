@@ -64,6 +64,7 @@ export default function CartDropdown({ excludedPaths = [] }) {
         onClick={toggleDropdown}
       >
         <ShoppingCartIcon className={styles.cartIcon} />
+        <span className={styles.itemCount}>{itemCount}</span>
       </button>
       <div ref={dropdown} className={styles.dropdown} data-testid={'dropdown'}>
         <Link to={'/cart'} className={styles.cartLink}>

@@ -24,6 +24,18 @@
   fill: #000000;
 }
 
+.itemCount {
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  color: #ffffff;
+  background-color: #000000;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 50%;
+}
+
 .dropdown {
   width: min(600px, 85vw);
   font-size: 0.95rem;

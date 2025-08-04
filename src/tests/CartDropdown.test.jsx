@@ -16,11 +16,7 @@ test('renders triggerbutton', () => {
     </MemoryRouter>
   );
 
-  expect(
-    screen.getByRole('button', {
-      name: /your cart is empty/i,
-    })
-  ).toBeInTheDocument();
+  expect(screen.getByTitle(/your cart is empty/i)).toBeInTheDocument();
 });
 
 test('renders title indicating current cart items count', () => {
@@ -40,11 +36,7 @@ test('renders title indicating current cart items count', () => {
     </MemoryRouter>
   );
 
-  expect(
-    screen.getByRole('button', {
-      name: /2 items in cart/i,
-    })
-  ).toBeInTheDocument();
+  expect(screen.getByTitle(/2 items in cart/i)).toBeInTheDocument();
 });
 
 test('does not render when excludedPaths includes current path', () => {
@@ -56,11 +48,7 @@ test('does not render when excludedPaths includes current path', () => {
     </MemoryRouter>
   );
 
-  expect(
-    screen.queryByRole('button', {
-      name: /your cart is empty/i,
-    })
-  ).toBeNull();
+  expect(screen.queryByTitle(/your cart is empty/i)).toBeNull();
 });
 
 describe('when dropdown is retracted', () => {
@@ -79,11 +67,7 @@ describe('when dropdown is retracted', () => {
 
     expect(dropdown.classList.value.includes('menuExtended')).toBeFalsy();
 
-    await user.click(
-      screen.queryByRole('button', {
-        name: /your cart is empty/i,
-      })
-    );
+    await user.click(screen.getByTitle(/your cart is empty/i));
 
     expect(dropdown.classList.value.includes('menuExtended')).toBeTruthy();
   });
@@ -137,11 +121,7 @@ describe('when dropdown is extended', () => {
 
     const dropdown = screen.getByTestId('dropdown');
 
-    await user.click(
-      screen.getByRole('button', {
-        name: /2 items in cart/i,
-      })
-    );
+    await user.click(screen.getByTitle(/2 items in cart/i));
 
     expect(
       within(dropdown).getByRole('link', {
@@ -171,9 +151,7 @@ describe('when dropdown is extended', () => {
 
     const dropdown = screen.getByTestId('dropdown');
 
-    const dropdownButton = screen.getByRole('button', {
-      name: /your cart is empty/i,
-    });
+    const dropdownButton = screen.getByTitle(/your cart is empty/i);
 
     await user.click(dropdownButton);
     await user.click(dropdownButton);
