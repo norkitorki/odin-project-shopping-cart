@@ -45,7 +45,7 @@
   text-align: center;
   border-radius: 6px 0 0 6px;
   position: fixed;
-  top: 3.5rem;
+  top: 4rem;
   right: -50%;
   z-index: -1;
   visibility: hidden;
@@ -67,7 +67,6 @@
 }
 
 .menuExtended {
-  top: 3.5rem;
   right: 0;
   z-index: 2;
   visibility: visible;
