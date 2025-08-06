@@ -1,4 +1,3 @@
-import CartItemsProvider from '../../providers/CartItemsProvider';
 import ShopItemsProvider from '../../providers/ShopItemsProvider';
 import Navigation from '../Navigation/Navigation';
 import CartDropdown from '../CartDropdown/CartDropdown';
@@ -8,12 +7,10 @@ export default function App() {
   return (
     <>
       <Navigation />
-      <CartItemsProvider>
-        <CartDropdown excludedPaths={['/', '/cart']} />
-        <ShopItemsProvider>
-          <Outlet />
-        </ShopItemsProvider>
-      </CartItemsProvider>
+      <CartDropdown excludedPaths={['/', '/cart']} />
+      <ShopItemsProvider>
+        <Outlet />
+      </ShopItemsProvider>
     </>
   );
 }

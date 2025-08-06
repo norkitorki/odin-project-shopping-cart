@@ -11,7 +11,7 @@ export default function ShopItemCard({
 }) {
   const itemImage = useRef(null);
   const navigate = useNavigate();
-  const { addToCart } = useCartItems();
+  const addToCart = useCartItems((state) => state.addToCart);
 
   const onClick = () => {
     addToCart(
