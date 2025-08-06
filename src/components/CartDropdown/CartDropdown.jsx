@@ -13,13 +13,13 @@ export default function CartDropdown({ excludedPaths = [] }) {
   const timeout = useRef(null);
 
   const extend = useCallback(() => {
-    dropdown.current.classList.add(styles.menuExtended);
-    trigger.current.setAttribute('aria-expanded', true);
+    dropdown.current?.classList.add(styles.menuExtended);
+    trigger.current?.setAttribute('aria-expanded', true);
   }, []);
 
   const retract = useCallback(() => {
-    dropdown.current.classList.remove(styles.menuExtended);
-    trigger.current.setAttribute('aria-expanded', false);
+    dropdown.current?.classList.remove(styles.menuExtended);
+    trigger.current?.setAttribute('aria-expanded', false);
   }, []);
 
   const toggleDropdown = useCallback(() => {
