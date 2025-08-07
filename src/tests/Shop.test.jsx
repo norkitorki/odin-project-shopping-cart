@@ -1,12 +1,16 @@
 import Shop from '../components/Shop/Shop';
 import ShopItemsProvider from '../providers/ShopItemsProvider';
 import userEvent from '@testing-library/user-event';
-import shopItems from '../assets/fakeShopItems';
-import { render, screen, within } from '@testing-library/react';
-import { test, expect } from 'vitest';
+import { render, screen, waitFor, within } from '@testing-library/react';
+import { test, expect, beforeAll, afterEach, afterAll } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { server, shopItems } from './mocks/shopItemsHandler';
 
-test('renders shop items', () => {
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+test('renders shop items', async () => {
   render(
     <MemoryRouter initialEntries={['/shop']}>
       <ShopItemsProvider>
@@ -15,15 +19,16 @@ test('renders shop items', () => {
     </MemoryRouter>
   );
 
-  const items = within(screen.getByTestId('itemList')).getAllByRole('link');
-
-  items.forEach((item, i) => expect(item.title).toBe(shopItems[i].title));
+  await waitFor(() => {
+    const items = within(screen.getByTestId('itemList')).getAllByRole('link');
+    items.forEach((item, i) => expect(item.title).toBe(shopItems[i].title));
+  });
 });
 
 test('filters items by category', async () => {
   const user = userEvent.setup();
-  const jeweleryItemsCount = shopItems.filter(
-    (item) => item.category === 'jewelery'
+  const clothesItemsCount = shopItems.filter(
+    (item) => item.category === 'clothes'
   ).length;
 
   render(
@@ -38,11 +43,12 @@ test('filters items by category', async () => {
     name: 'All Categories',
   }).parentElement;
 
-  await user.selectOptions(filterSelect, 'jewelery');
-
-  expect(screen.getByTestId('itemList').children.length).toBe(
-    jeweleryItemsCount
-  );
+  await waitFor(async () => {
+    await user.selectOptions(filterSelect, 'clothes');
+    expect(screen.getByTestId('itemList').children.length).toBe(
+      clothesItemsCount
+    );
+  });
 });
 
 test('sorts items', async () => {
@@ -63,14 +69,15 @@ test('sorts items', async () => {
     name: 'Sort by',
   }).parentElement;
 
-  await user.selectOptions(sortSelect, 'title');
+  await waitFor(async () => {
+    await user.selectOptions(sortSelect, 'title');
 
-  const items = within(screen.getByTestId('itemList')).getAllByRole('link');
+    const items = within(screen.getByTestId('itemList')).getAllByRole('link');
+    let index = 0;
+    for (; index < sortedItems.length; index++) {
+      if (sortedItems[index].title !== items[index].title) break;
+    }
 
-  let index = 0;
-  for (; index < sortedItems.length; index++) {
-    if (sortedItems[index].title !== items[index].title) break;
-  }
-
-  expect(index).toBe(sortedItems.length);
+    expect(index).toBe(sortedItems.length);
+  });
 });
