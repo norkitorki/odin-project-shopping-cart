@@ -7,6 +7,10 @@ export default function Shop() {
   const { shopItems, filteredItems, sortItems, filterItems } = useShopItems();
   const sortSelect = useRef(null);
   const items = filteredItems || shopItems;
+  const defaultCategory =
+    filteredItems && filterItems.length > 0
+      ? filteredItems[0]?.category
+      : 'default';
 
   const sortShopItems = useCallback(
     (event) => {
@@ -42,10 +46,12 @@ export default function Shop() {
   return (
     <>
       <div className={styles.selectWrapper}>
-        <select onChange={filterShopItems} className={styles.selectInput}>
-          <option defaultChecked value="default">
-            All Categories
-          </option>
+        <select
+          onChange={filterShopItems}
+          className={styles.selectInput}
+          defaultValue={defaultCategory}
+        >
+          <option value="default">All Categories</option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category[0].toUpperCase() + category.slice(1)}

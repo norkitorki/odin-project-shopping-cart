@@ -1,9 +1,17 @@
-import shopItems from '../assets/fakeShopItems';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ShopItemsContext } from '../contexts/ShopItemsContext';
+import axios from 'axios';
 
 export default function ShopItemsProvider({ children }) {
+  const [shopItems, setShopItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get('https://fakestoreapi.com/products')
+      .then((response) => setShopItems(response.data))
+      .catch((error) => console.error(error.message));
+  }, []);
 
   const sortItems = useCallback(
     (property, direction) => {
@@ -14,14 +22,17 @@ export default function ShopItemsProvider({ children }) {
         })
       );
     },
-    [filteredItems]
+    [filteredItems, shopItems]
   );
 
-  const filterItems = useCallback((category) => {
-    if (category === 'default') return setFilteredItems(null);
+  const filterItems = useCallback(
+    (category) => {
+      if (category === 'default') return setFilteredItems(null);
 
-    setFilteredItems(shopItems.filter((item) => item.category === category));
-  }, []);
+      setFilteredItems(shopItems.filter((item) => item.category === category));
+    },
+    [shopItems]
+  );
 
   return (
     <ShopItemsContext
