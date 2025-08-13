@@ -8,6 +8,8 @@ export default function ShopItem() {
   const { id } = useParams();
   const shopItem = shopItems.find((item) => item.id === Number(id));
 
+  if (!shopItem) return;
+
   return (
     <div className={styles.wrapper}>
       <ShopItemCard item={shopItem} linkToItem={false} redirectToCart={true} />
