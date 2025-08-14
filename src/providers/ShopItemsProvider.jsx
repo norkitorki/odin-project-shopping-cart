@@ -11,6 +11,8 @@ export default function ShopItemsProvider({ children }) {
       .get('https://fakestoreapi.com/products')
       .then((response) => setShopItems(response.data))
       .catch((error) => console.error(error.message));
+
+    return () => setShopItems([]); 
   }, []);
 
   const sortItems = useCallback(

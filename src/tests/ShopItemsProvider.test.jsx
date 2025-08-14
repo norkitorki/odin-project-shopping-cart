@@ -1,96 +1,93 @@
 import ShopItemsProvider from '../providers/ShopItemsProvider';
-import fakeShopItems from '../assets/fakeShopItems';
+import fakeShopItems from './assets/shopItems';
+import axiosMock from './mocks/axiosMock';
 import { ShopItemsContext } from '../contexts/ShopItemsContext';
 import { expect, test } from 'vitest';
-import { useContext, useEffect } from 'react';
-import { MemoryRouter } from 'react-router';
+import { act, useContext, useEffect } from 'react';
 import { render } from '@testing-library/react';
 
-const renderWithProvider = (component) =>
-  render(
-    <MemoryRouter>
-      <ShopItemsProvider>{component}</ShopItemsProvider>
-    </MemoryRouter>
-  );
+axiosMock('https://fakestoreapi.com/products', fakeShopItems);
 
-test('returns shop items', () => {
+const renderWithProvider = (component) =>
+  render(<ShopItemsProvider>{component}</ShopItemsProvider>);
+
+test('returns shop items', async () => {
+  expect.assertions(1);
+
   const TestComponent = () => {
     const { shopItems } = useContext(ShopItemsContext);
 
-    expect(shopItems).toBe(fakeShopItems);
+    if (shopItems.length > 0) expect(shopItems).toEqual(fakeShopItems);
   };
 
-  renderWithProvider(<TestComponent />);
+  await act(() => renderWithProvider(<TestComponent />));
 });
 
-test('sorts items in ascending order', () => {
+test('sorts items in ascending order', async () => {
+  expect.assertions(1);
+
   const TestComponent = () => {
     const { shopItems, filteredItems, sortItems } =
       useContext(ShopItemsContext);
 
-    useEffect(() => sortItems('price'), []);
+    useEffect(() => {
+      if (shopItems.length > 0) sortItems('title');
+    }, [shopItems]);
 
     if (filteredItems) {
       const sortedItems = shopItems.toSorted((a, b) =>
-        a.price <= b.price ? -1 : 1
+        a.title <= b.title ? -1 : 1
       );
 
-      let index = 0;
-      for (; index < sortedItems.length; index++) {
-        if (sortedItems[index].id !== filteredItems[index].id) break;
-      }
-
-      expect(index).toBe(sortedItems.length);
+      expect(filteredItems).toEqual(sortedItems);
     }
   };
 
-  renderWithProvider(<TestComponent />);
+  await act(() => renderWithProvider(<TestComponent />));
 });
 
-test('sorts items in descending order', () => {
+test('sorts items in descending order', async () => {
+  expect.assertions(1);
+
   const TestComponent = () => {
     const { shopItems, filteredItems, sortItems } =
       useContext(ShopItemsContext);
 
-    useEffect(() => sortItems('title', 'desc'), []);
+    useEffect(() => {
+      if (shopItems.length > 0) sortItems('title', 'desc');
+    }, [shopItems]);
 
     if (filteredItems) {
       const sortedItems = shopItems.toSorted((a, b) =>
         b.title <= a.title ? -1 : 1
       );
 
-      let index = 0;
-      for (; index < sortedItems.length; index++) {
-        if (sortedItems[index].id !== filteredItems[index].id) break;
-      }
-
-      expect(index).toBe(sortedItems.length);
+      expect(filteredItems).toEqual(sortedItems);
     }
   };
 
-  renderWithProvider(<TestComponent />);
+  await act(() => renderWithProvider(<TestComponent />));
 });
 
-test('filters items based on category', () => {
+test('filters items based on category', async () => {
+  expect.assertions(1);
+
   const TestComponent = () => {
     const { shopItems, filteredItems, filterItems } =
       useContext(ShopItemsContext);
 
-    useEffect(() => filterItems('jewelery'), []);
+    useEffect(() => {
+      if (shopItems.length > 0) filterItems('electronics');
+    }, [shopItems]);
 
     if (filteredItems) {
-      const jeweleryItems = shopItems.filter(
-        (item) => item.category === 'jewelery'
+      const electronicItems = shopItems.filter(
+        (item) => item.category === 'electronics'
       );
 
-      expect(jeweleryItems.length).toBe(filteredItems.length);
-      jeweleryItems.forEach((jeweleryItem) => {
-        expect(
-          filteredItems.find((item) => jeweleryItem.id === item.id)
-        ).toBeTruthy();
-      });
+      expect(filteredItems).toEqual(electronicItems);
     }
   };
 
-  renderWithProvider(<TestComponent />);
+  await act(() => renderWithProvider(<TestComponent />));
 });

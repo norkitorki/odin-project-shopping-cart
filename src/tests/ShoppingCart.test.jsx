@@ -1,18 +1,12 @@
 import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
-import CartItemsProvider from '../providers/CartItemsProvider';
 import userEvent from '@testing-library/user-event';
 import { render, screen, within } from '@testing-library/react';
-import { test, expect, vi, beforeEach, afterEach, describe } from 'vitest';
+import { test, expect, vi, describe, beforeEach, afterAll } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { ClearCartItems, PopulateCartItems } from './helpers/cartItemsHelper';
 
 test('renders heading when shopping cart is empty', () => {
-  render(
-    <MemoryRouter>
-      <CartItemsProvider>
-        <ShoppingCart />
-      </CartItemsProvider>
-    </MemoryRouter>
-  );
+  render(<ShoppingCart />);
 
   expect(
     screen.getByRole('heading', {
@@ -27,19 +21,19 @@ describe('when shopping cart is populated', () => {
     { id: 2, title: 'Another Item', price: 4.95, image: null, quantity: 1 },
   ];
 
-  beforeEach(() =>
-    localStorage.setItem('cart_items', JSON.stringify(cartItems))
-  );
-  afterEach(() => localStorage.removeItem('cart_items'));
-
-  test('renders heading', () => {
+  const renderWithCartItems = (component) =>
     render(
       <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
+        <PopulateCartItems items={cartItems} />
+        {component}
       </MemoryRouter>
     );
+
+  beforeEach(() => render(<ClearCartItems />));
+  afterAll(() => render(<ClearCartItems />));
+
+  test('renders heading', () => {
+    renderWithCartItems(<ShoppingCart />);
 
     expect(
       screen.getByRole('heading', {
@@ -48,17 +42,14 @@ describe('when shopping cart is populated', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders cart items', () => {
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+  test('renders cart items', async () => {
+    expect.assertions(8);
+    renderWithCartItems(<ShoppingCart />);
 
-    const firstItem = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
-    const secondItem = screen.getByRole('row', {
+    const firstItem = await screen.findByRole('row', {
+      name: /test item 2 \$2\.99/i,
+    });
+    const secondItem = await screen.findByRole('row', {
       name: /another item 1 \$4\.95/i,
     });
 
@@ -96,17 +87,14 @@ describe('when shopping cart is populated', () => {
   });
 
   test('updates cart item quantity', async () => {
+    expect.assertions(2);
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+    renderWithCartItems(<ShoppingCart />);
 
-    const itemRow = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
+    const itemRow = await screen.findByRole('row', {
+      name: /test item 2 \$2\.99/i,
+    });
     const quantityDisplay = within(itemRow).getByRole('textbox');
 
     expect(quantityDisplay).toHaveValue('2');
@@ -121,15 +109,11 @@ describe('when shopping cart is populated', () => {
   test('removes item from cart', async () => {
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+    renderWithCartItems(<ShoppingCart />);
 
-    const itemRow = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
+    const itemRow = await screen.findByRole('row', {
+      name: /test item 2 \$2\.99/i,
+    });
 
     expect(itemRow).toBeInTheDocument();
     await user.click(
@@ -141,17 +125,12 @@ describe('when shopping cart is populated', () => {
   });
 
   test('removes item from cart when quantity hits 0', async () => {
+    expect.assertions(1);
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+    renderWithCartItems(<ShoppingCart />);
 
-    const itemRow = screen.getByRole('row', {
+    const itemRow = await screen.findByRole('row', {
       name: /another item 1 \$4\.95/i,
     });
     const decreaseButton = within(itemRow).getByRole('button', {
@@ -164,18 +143,15 @@ describe('when shopping cart is populated', () => {
   });
 
   test('clears cart items', async () => {
+    expect.assertions(3);
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+    renderWithCartItems(<ShoppingCart />);
 
-    const firstItem = screen.getByRole('row', { name: /test item 2 \$2\.99/i });
-    const secondItem = screen.getByRole('row', {
+    const firstItem = await screen.findByRole('row', {
+      name: /test item 2 \$2\.99/i,
+    });
+    const secondItem = await screen.findByRole('row', {
       name: /another item 1 \$4\.95/i,
     });
 
@@ -191,23 +167,18 @@ describe('when shopping cart is populated', () => {
   });
 
   test('checks out the cart', async () => {
+    expect.assertions(3);
     const user = userEvent.setup();
     const originalConfirm = window.confirm;
     const originalAlert = window.alert;
 
-    render(
-      <MemoryRouter>
-        <CartItemsProvider initialItems={cartItems}>
-          <ShoppingCart />
-        </CartItemsProvider>
-      </MemoryRouter>
-    );
+    renderWithCartItems(<ShoppingCart />);
 
     window.confirm = vi.fn(() => true);
     window.alert = vi.fn();
 
     await user.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: /to checkout/i,
       })
     );

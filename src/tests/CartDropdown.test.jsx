@@ -1,18 +1,22 @@
 import CartDropdown from '../components/CartDropdown/CartDropdown';
-import CartItemsProvider from '../providers/CartItemsProvider';
 import userEvent from '@testing-library/user-event';
+import { ClearCartItems, PopulateCartItems } from './helpers/cartItemsHelper';
 import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { test, expect, describe, afterEach } from 'vitest';
+import { test, expect, describe, afterAll, beforeEach } from 'vitest';
 
-afterEach(() => localStorage.removeItem('cart_items'));
+const cartItems = [
+  { id: 1, title: 'USB cable', price: 1.99, quantity: 1 },
+  { id: 2, title: 'Screen Protector', price: 14.99, quantity: 2 },
+];
+
+beforeEach(() => render(<ClearCartItems />));
+afterAll(() => render(<ClearCartItems />));
 
 test('renders triggerbutton', () => {
   render(
     <MemoryRouter>
-      <CartItemsProvider>
-        <CartDropdown />
-      </CartItemsProvider>
+      <CartDropdown />
     </MemoryRouter>
   );
 
@@ -20,19 +24,11 @@ test('renders triggerbutton', () => {
 });
 
 test('renders title indicating current cart items count', () => {
-  localStorage.setItem(
-    'cart_items',
-    JSON.stringify([
-      { id: 1, title: 'USB cable', price: 1.99, quantity: 1 },
-      { id: 2, title: 'Screen Protector', price: 14.99, quantity: 2 },
-    ])
-  );
-
   render(
     <MemoryRouter>
-      <CartItemsProvider>
-        <CartDropdown />
-      </CartItemsProvider>
+      <ClearCartItems />
+      <PopulateCartItems items={cartItems} />
+      <CartDropdown />
     </MemoryRouter>
   );
 
@@ -42,9 +38,7 @@ test('renders title indicating current cart items count', () => {
 test('does not render when excludedPaths includes current path', () => {
   render(
     <MemoryRouter initialIndex={0} initialEntries={['/about']}>
-      <CartItemsProvider>
-        <CartDropdown excludedPaths={['/about']} />
-      </CartItemsProvider>
+      <CartDropdown excludedPaths={['/about']} />
     </MemoryRouter>
   );
 
@@ -57,9 +51,7 @@ describe('when dropdown is retracted', () => {
 
     render(
       <MemoryRouter>
-        <CartItemsProvider>
-          <CartDropdown />
-        </CartItemsProvider>
+        <CartDropdown />
       </MemoryRouter>
     );
 
@@ -69,6 +61,7 @@ describe('when dropdown is retracted', () => {
 
     await user.click(screen.getByTitle(/your cart is empty/i));
 
+    expect(dropdown).toBeVisible();
     expect(dropdown.classList.value.includes('menuExtended')).toBeTruthy();
   });
 });
@@ -79,19 +72,13 @@ describe('when dropdown is extended', () => {
 
     render(
       <MemoryRouter>
-        <CartItemsProvider>
-          <CartDropdown />
-        </CartItemsProvider>
+        <CartDropdown />
       </MemoryRouter>
     );
 
     const dropdown = screen.getByTestId('dropdown');
 
-    await user.click(
-      screen.queryByRole('button', {
-        name: /your cart is empty/i,
-      })
-    );
+    await user.click(screen.getByTitle(/your cart is empty/i));
 
     expect(
       within(dropdown).getByRole('link', {
@@ -101,21 +88,12 @@ describe('when dropdown is extended', () => {
   });
 
   test('renders cart items and total', async () => {
-    localStorage.setItem(
-      'cart_items',
-      JSON.stringify([
-        { id: 1, title: 'USB cable', price: 1.99, quantity: 1 },
-        { id: 2, title: 'Screen Protector', price: 14.99, quantity: 2 },
-      ])
-    );
-
     const user = userEvent.setup();
 
     render(
       <MemoryRouter>
-        <CartItemsProvider>
-          <CartDropdown />
-        </CartItemsProvider>
+        <PopulateCartItems items={cartItems} />
+        <CartDropdown />
       </MemoryRouter>
     );
 
@@ -143,9 +121,7 @@ describe('when dropdown is extended', () => {
 
     render(
       <MemoryRouter>
-        <CartItemsProvider>
-          <CartDropdown />
-        </CartItemsProvider>
+        <CartDropdown />
       </MemoryRouter>
     );
 

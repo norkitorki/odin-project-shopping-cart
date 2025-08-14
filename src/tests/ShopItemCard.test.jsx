@@ -1,15 +1,13 @@
 import ShopItemCard from '../components/ShopItemCard/ShopItemCard';
-import fakeShopItems from '../assets/fakeShopItems';
+import shopItems from './assets/shopItems';
 import userEvent from '@testing-library/user-event';
-import CartItemsProvider from '../providers/CartItemsProvider';
 import { render, screen } from '@testing-library/react';
 import { test, expect, describe } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { useContext } from 'react';
-import { CartItemsContext } from '../contexts/CartItemsContext';
+import { useCartItems } from '../hooks/useCartItems';
 
 test('renders item card', () => {
-  const shopItem = fakeShopItems[0];
+  const shopItem = shopItems[0];
 
   render(
     <MemoryRouter>
@@ -41,18 +39,14 @@ test('renders item card', () => {
 describe('when add to cart button is clicked', () => {
   test('redirects to /cart when redirectToCart is truthy', async () => {
     const user = userEvent.setup();
-    const shopItem = fakeShopItems[0];
+    const shopItem = shopItems[0];
 
     render(
       <MemoryRouter initialIndex={0} initialEntries={['/shop/item/1']}>
         <Routes>
           <Route
             path="/shop/item/1"
-            element={
-              <CartItemsProvider>
-                <ShopItemCard item={shopItem} redirectToCart={true} />
-              </CartItemsProvider>
-            }
+            element={<ShopItemCard item={shopItem} redirectToCart={true} />}
           />
           <Route path="/cart" element={<h1>Your Shopping Cart</h1>} />
         </Routes>
@@ -73,11 +67,13 @@ describe('when add to cart button is clicked', () => {
   });
 
   test('adds item to cart', async () => {
+    expect.assertions(1);
+
     const user = userEvent.setup();
-    const shopItem = fakeShopItems[0];
+    const shopItem = shopItems[0];
 
     const Cart = () => {
-      const { cartItems } = useContext(CartItemsContext);
+      const { cartItems } = useCartItems();
 
       expect(cartItems[0]).toMatchObject({
         id: shopItem.id,
@@ -92,20 +88,9 @@ describe('when add to cart button is clicked', () => {
         <Routes>
           <Route
             path="/shop/item/1"
-            element={
-              <CartItemsProvider>
-                <ShopItemCard item={shopItem} redirectToCart={true} />
-              </CartItemsProvider>
-            }
+            element={<ShopItemCard item={shopItem} redirectToCart={true} />}
           />
-          <Route
-            path="/cart"
-            element={
-              <CartItemsProvider>
-                <Cart />
-              </CartItemsProvider>
-            }
-          />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </MemoryRouter>
     );

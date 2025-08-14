@@ -41,7 +41,7 @@ const removeFromCart = (state, itemId) => {
 };
 
 const updateQuantity = (state, itemId, newQuantity) => {
-  if (newQuantity <= 0) return state.removeFromCart(itemId);
+  if (newQuantity <= 0) return removeFromCart(state, itemId);
 
   const items = state.cartItems.map((item) =>
     item.id === itemId ? { ...item, quantity: Number(newQuantity) } : item
